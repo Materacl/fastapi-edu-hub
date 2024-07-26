@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "fastapi-edu-hub"
+version = "0.1.0"
+description = "\"A FastAPI project for educational and internal company documentation.\""
+authors = ["Materacl <yurchenko.stas15@gmail.com>"]
+license = "MIT license"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.111.1"
+uvicorn = {extras = ["standard"], version = "^0.30.3"}
+sqlalchemy = "^2.0.31"
+alembic = "^1.13.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

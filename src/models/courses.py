@@ -17,7 +17,7 @@ class Courses(Base):
     __tablename__ = "courses"
 
     id: Mapped[intpk]
-    title: Mapped[str_128]
+    title: Mapped[str_128] = mapped_column(unique=True, index=True)
     description: Mapped[str] = mapped_column(Text)
     status: Mapped[CourseStatus] = mapped_column(default=CourseStatus.IN_DEVELOPMENT)
     created_at: Mapped[created_at]

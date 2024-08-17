@@ -27,26 +27,22 @@ class Users(Base):
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
 
-    lessons_in_progress: Mapped[List["Lessons"]] = relationship(
-        secondary="lessons_progresses",
-        primaryjoin="and_(Users.id == LessonsProgresses.user_id, "
-                    "LessonsProgresses.status == ProgressStatus.IN_PROGRESS)",
-        secondaryjoin="LessonsProgresses.lesson_id == Lessons.id",
+    courses_in_progress: Mapped[List["Courses"]] = relationship(
+        secondary="courses_progresses",
+        primaryjoin="and_(Users.id == CoursesProgresses.user_id, "
+                    "CoursesProgresses.status == ProgressStatus.IN_PROGRESS)",
+        secondaryjoin="CoursesProgresses.course_id == Courses.id",
+        order_by="CoursesProgresses.created_at.desc()",
         viewonly=True,
     )
 
-    lessons_completed: Mapped[List["Lessons"]] = relationship(
-        secondary="lessons_progresses",
-        primaryjoin="and_(Users.id == LessonsProgresses.user_id, "
-                    "LessonsProgresses.status == ProgressStatus.COMPLETED)",
-        secondaryjoin="LessonsProgresses.lesson_id == Lessons.id",
-        order_by="LessonsProgresses.created_at.desc()",
+    courses_completed: Mapped[List["Lessons"]] = relationship(
+        secondary="courses_progresses",
+        primaryjoin="and_(Users.id == CoursesProgresses.user_id, "
+                    "CoursesProgresses.status == ProgressStatus.COMPLETED)",
+        secondaryjoin="CoursesProgresses.course_id == Courses.id",
+        order_by="CoursesProgresses.created_at.desc()",
         viewonly=True,
-    )
-
-    user_answers: Mapped[List["UsersAnswers"]] = relationship(
-        back_populates="user",
-        order_by="UsersAnswers.created_at.desc()"
     )
 
     comments: Mapped[List["Comments"]] = relationship(

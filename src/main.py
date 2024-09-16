@@ -1,9 +1,7 @@
 import logging
 from fastapi import FastAPI
-# from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from api.v1 import router as api_v1_router
-# from api.v1.utils.scheduler import scheduler
 from config import settings
 
 # Configure logging
@@ -18,46 +16,15 @@ def create_app() -> FastAPI:
     Returns:
         app (FastAPI): The configured FastAPI application.
     """
+
     app = FastAPI(
-        title="HomCinemaVR API",
-        description="API documentation for HomeCinemaVR",
-        version="0.1.0",
+        title=settings.APP_TITLE,
+        description=settings.APP_DESCRIPTION,
+        version=settings.APP_VERSION,
         )
-
-    # List of allowed origins for CORS. This can be configured via environment variables.
-    # origins = settings.CORS_ORIGINS.split(",")  # assuming CORS_ORIGINS is a comma-separated string
-
-    # # Add CORS middleware to the FastAPI app to handle cross-origin requests.
-    # app.add_middleware(
-    #     CORSMiddleware, # noqa
-    #     allow_origins=origins,
-    #     allow_credentials=True,
-    #     allow_methods=["*"],
-    #     allow_headers=["*"],
-    # )
 
     # Include API v1 router
     app.include_router(api_v1_router, prefix="/api")
-
-    # @app.on_event("startup")
-    # async def startup_event():
-    #     """
-    #     Event handler that runs on application startup.
-    #     Starts the scheduler if it's not already running.
-    #     """
-    #     if not scheduler.running:
-    #         scheduler.start()
-    #     logger.info("Scheduler started")
-    #
-    # @app.on_event("shutdown")
-    # async def shutdown_event():
-    #     """
-    #     Event handler that runs on application shutdown.
-    #     Shuts down the scheduler if it's running.
-    #     """
-    #     if scheduler.running:
-    #         scheduler.shutdown()
-    #     logger.info("Scheduler stopped")
 
     @app.get("/")
     async def read_root():
@@ -71,5 +38,3 @@ def create_app() -> FastAPI:
 
 # Create an instance of the FastAPI application
 app = create_app()
-
-
